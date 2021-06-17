@@ -2,6 +2,7 @@
 
 require_once('Charge.php');
 require_once('Token.php');
+require_once('PaymentMethod.php');
 
 
 $cardToken = array(
@@ -55,6 +56,26 @@ $cvcUpdateToken = array(
 $token = new Token();
 echo '<pre>';
 print_r($token->createCard($cardToken));
+echo '</pre>';
+
+
+$paymentMethodCreate = array(
+    'type' => 'card',
+    'card' => [
+        'number' => '4242424242424242',
+        'exp_month' => 6,
+        'exp_year' => 2022,
+        'cvc' => '314',
+    ],
+);
+
+$paymentMethod = new PaymentMethod();
+echo '<pre>';
+print_r($paymentMethod->create($paymentMethod));
+print_r($paymentMethod->retrieve('pm_1EUmzw2xToAoV8choYUtciXR'));
+print_r($paymentMethod->update('pm_1EUmzw2xToAoV8choYUtciXR',['metadata' => ['order_id' => '6735']]));
+print_r($paymentMethod->all(['customer' => 'cus_JgEB0xk16nTGMV','type' => 'card']));
+print_r($paymentMethod->attach('pm_1EUmzw2xToAoV8choYUtciXR',['customer' => 'cus_JgEB0xk16nTGMV']));
 echo '</pre>';
 
 $postdata =  array(
