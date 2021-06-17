@@ -1,42 +1,50 @@
 <?php
-require_once('Stripe.php');
+
 require_once('DotEnv.php');
-class Curl {
+require_once('Base.php');
+
+class Curl extends Base {
 
     // class variable that will hold the curl request handler
-    private $handler = null;
+    private $handler;
 
     // class variable that will hold the url
-    private $baseUrl = '';
+    private $baseUrl;
 
     // class variable that will hold the data inputs of our request
-    private $data = [];
+    private $data;
 
     // class variable that will tell us what type of request method to use (defaults to get)
-    private $requestMethod = 'get';
+    private $requestMethod;
 
     public function __construct()
     {
-        if ($this->isCurlInstalled()) {
-            echo "<br>cURL is <span style=\"color:blue\">installed</span> on this server<br>";
-        } else {
-            echo "<br>cURL is NOT <span style=\"color:red\">installed</span> on this server<br>";
-        }
-        (new DotEnv($this->getEnvFilePath('.env'), [
+        $this->isCurlInstalled();
 
-        ]))->load();
+        (new DotEnv($this->getEnvFilePath('.env'), []))->load();
+        $this->initProperties();
     }
 
+    /**
+     * @param null $handler
+     * @param string $baseUrl
+     * @param array $data
+     * @param string $requestMethod
+     */
+    public function initProperties($handler = null, $baseUrl = '', $data = [], $requestMethod = self::GET){
+        $this->handler = $handler;
+        $this->baseUrl = $baseUrl;
+        $this->data = $data;
+        $this->requestMethod = $requestMethod;
+    }
 
     /**
      * @param string $baseUrl
      * @return $this
      */
-    public function setBaseUrl( $baseUrl = '' ){
+    public function setBaseUrl(){
 
-        $this->baseUrl = Stripe::setBaseUrl();
-        $this->baseUrl .= $baseUrl;
-
+        $this->baseUrl = self::STRIPE_END_POINT.'/'.self::STRIPE_API_VERSION;
         return $this;
     }
 
@@ -53,7 +61,7 @@ class Curl {
      * @param string $requestMethod
      * @return $this
      */
-    public function setMethod( $requestMethod = 'get' ){
+    public function setMethod( $requestMethod = self::GET ){
         $this->requestMethod = $requestMethod;
         return $this;
     }
@@ -69,18 +77,18 @@ class Curl {
             #}
             switch( strtolower( $this->requestMethod ) ){
 
-                case 'post':
+                case self::POST:
                     curl_setopt($this->handler, CURLOPT_POST, count($this->data));
                     if ($this->data)
                         curl_setopt($this->handler, CURLOPT_POSTFIELDS, http_build_query($this->data));
                     break;
-                case 'put':
-                    curl_setopt($this->handler, CURLOPT_CUSTOMREQUEST, "PUT");
+                case self::PUT:
+                    curl_setopt($this->handler, CURLOPT_CUSTOMREQUEST, self::PUT);
                     if ($this->data)
                         curl_setopt($this->handler, CURLOPT_POSTFIELDS, http_build_query($this->data));
                     break;
-                case 'delete':
-                    curl_setopt($this->handler, CURLOPT_CUSTOMREQUEST, "DELETE");
+                case self::DELETE:
+                    curl_setopt($this->handler, CURLOPT_CUSTOMREQUEST, self::DELETE);
                     if ($this->data)
                         curl_setopt($this->handler, CURLOPT_POSTFIELDS, http_build_query($this->data));
                     break;
@@ -143,17 +151,22 @@ class Curl {
     }
 
     /**
-     * @return bool
+     * Check cURL is installed or not
      */
     public  function isCurlInstalled() {
+
         if  (in_array  ('curl', get_loaded_extensions())) {
-            return true;
+            echo "<br>cURL is <span style=\"color:blue\">installed</span> on this server<br>";
         }
         else {
-            return false;
+            echo "<br>cURL is NOT <span style=\"color:red\">installed</span> on this server<br>";
         }
     }
 
+    /**
+     * @param $file
+     * @return string
+     */
     public function getEnvFilePath($file)
     {
         return __DIR__ . DIRECTORY_SEPARATOR . $file;

@@ -1,13 +1,10 @@
 <?php
 require_once('Curl.php');
 
-/**
- * Class Charge
- */
-class StripeCharge {
+class Product {
 
+    const END_POINT = '/products';
     private $curl;
-    private $endPoint = '/charges';
     public function __construct()
     {
         $this->curl = new Curl();
@@ -19,8 +16,8 @@ class StripeCharge {
      */
     public function create($data){
 
-       return $this->curl->setBaseUrl($this->endPoint)
-            ->setMethod('post')
+       return $this->curl->setBaseUrl(self::END_POINT)
+            ->setMethod(self::POST)
             ->setData($data)
             ->send();
     }
@@ -31,8 +28,8 @@ class StripeCharge {
      */
     public function retrieve($id){
 
-        return $this->curl->setBaseUrl($this->endPoint.'/'.$id)
-            ->setMethod('get')
+        return $this->curl->setBaseUrl(self::END_POINT.'/'.$id)
+            ->setMethod(self::GET)
             ->send();
     }
 
@@ -43,8 +40,8 @@ class StripeCharge {
      */
     public function update($id, $data){
 
-        return $this->curl->setBaseUrl($this->endPoint.'/'.$id)
-            ->setMethod('put')
+        return $this->curl->setBaseUrl(self::END_POINT.'/'.$id)
+            ->setMethod(self::PUT)
             ->setData($data)
             ->send();
     }
@@ -53,10 +50,10 @@ class StripeCharge {
      * @param $id
      * @return bool|string
      */
-    public function capture($id){
+    public function delete($id){
 
-        return $this->curl->setBaseUrl($this->endPoint.'/'.$id.'/capture')
-            ->setMethod('post')
+        return $this->curl->setBaseUrl(self::END_POINT.'/'.$id)
+            ->setMethod(self::DELETE)
             ->send();
     }
 
@@ -65,8 +62,8 @@ class StripeCharge {
      */
     public function all(){
 
-        return $this->curl->setBaseUrl($this->endPoint)
-            ->setMethod('get')
+        return $this->curl->setBaseUrl(self::END_POINT)
+            ->setMethod(self::GET)
             ->send();
     }
 

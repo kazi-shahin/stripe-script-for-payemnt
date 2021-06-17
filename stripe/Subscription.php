@@ -1,10 +1,13 @@
 <?php
 require_once('Curl.php');
+require_once('Base.php');
 
-class StripePlan {
+class Subscription extends Base{
 
-    private $endPoint = '/plans';
+    const END_PONT = '/subscriptions';
+
     private $curl;
+
     public function __construct()
     {
         $this->curl = new Curl();
@@ -16,8 +19,8 @@ class StripePlan {
      */
     public function create($data){
 
-       return $this->curl->setBaseUrl($this->endPoint)
-            ->setMethod('post')
+       return $this->curl->setBaseUrl(self::END_PONT)
+            ->setMethod(self::POST)
             ->setData($data)
             ->send();
     }
@@ -28,8 +31,8 @@ class StripePlan {
      */
     public function retrieve($id){
 
-        return $this->curl->setBaseUrl($this->endPoint.'/'.$id)
-            ->setMethod('get')
+        return $this->curl->setBaseUrl(self::END_PONT.'/'.$id)
+            ->setMethod(self::GET)
             ->send();
     }
 
@@ -40,8 +43,8 @@ class StripePlan {
      */
     public function update($id, $data){
 
-        return $this->curl->setBaseUrl($this->endPoint.'/'.$id)
-            ->setMethod('put')
+        return $this->curl->setBaseUrl(self::END_PONT.'/'.$id)
+            ->setMethod(self::PUT)
             ->setData($data)
             ->send();
     }
@@ -52,8 +55,8 @@ class StripePlan {
      */
     public function delete($id){
 
-        return $this->curl->setBaseUrl($this->endPoint.'/'.$id)
-            ->setMethod('delete')
+        return $this->curl->setBaseUrl(self::END_PONT.'/'.$id)
+            ->setMethod(self::DELETE)
             ->send();
     }
 
@@ -62,9 +65,8 @@ class StripePlan {
      */
     public function all(){
 
-        return $this->curl->setBaseUrl($this->endPoint)
-            ->setMethod('get')
+        return $this->curl->setBaseUrl(self::END_PONT)
+            ->setMethod(self::GET)
             ->send();
     }
-
 }

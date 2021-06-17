@@ -1,9 +1,9 @@
 <?php
 require_once('Curl.php');
 
-class StripeProduct {
+class Plan {
 
-    private $endPoint = '/products';
+    const END_POINT = '/plans';
     private $curl;
     public function __construct()
     {
@@ -16,8 +16,8 @@ class StripeProduct {
      */
     public function create($data){
 
-       return $this->curl->setBaseUrl($this->endPoint)
-            ->setMethod('post')
+       return $this->curl->setBaseUrl(self::END_POINT)
+            ->setMethod(self::POST)
             ->setData($data)
             ->send();
     }
@@ -28,8 +28,8 @@ class StripeProduct {
      */
     public function retrieve($id){
 
-        return $this->curl->setBaseUrl($this->endPoint.'/'.$id)
-            ->setMethod('get')
+        return $this->curl->setBaseUrl(self::END_POINT.'/'.$id)
+            ->setMethod(self::GET)
             ->send();
     }
 
@@ -40,8 +40,8 @@ class StripeProduct {
      */
     public function update($id, $data){
 
-        return $this->curl->setBaseUrl($this->endPoint.'/'.$id)
-            ->setMethod('put')
+        return $this->curl->setBaseUrl(self::END_POINT.'/'.$id)
+            ->setMethod(self::PUT)
             ->setData($data)
             ->send();
     }
@@ -52,8 +52,8 @@ class StripeProduct {
      */
     public function delete($id){
 
-        return $this->curl->setBaseUrl($this->endPoint.'/'.$id)
-            ->setMethod('delete')
+        return $this->curl->setBaseUrl(self::END_POINT.'/'.$id)
+            ->setMethod(self::DELETE)
             ->send();
     }
 
@@ -62,8 +62,8 @@ class StripeProduct {
      */
     public function all(){
 
-        return $this->curl->setBaseUrl($this->endPoint)
-            ->setMethod('get')
+        return $this->curl->setBaseUrl(self::END_POINT)
+            ->setMethod(self::GET)
             ->send();
     }
 
