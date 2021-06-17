@@ -1,0 +1,1 @@
+# stripe-script-for-payemnt
