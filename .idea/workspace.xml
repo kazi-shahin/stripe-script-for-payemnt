@@ -23,10 +23,11 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Workspace\www\library\stripe" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Workspace\www\library\stripe" />
+      <recent name="C:\Workspace\www\library" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Workspace\www\library\stripe" />
     </key>
   </component>
@@ -39,7 +40,7 @@
       <option name="presentableId" value="Default" />
       <updated>1623902755563</updated>
       <workItem from="1623902756599" duration="14957000" />
-      <workItem from="1623921547213" duration="13865000" />
+      <workItem from="1623921547213" duration="15649000" />
     </task>
     <servers />
   </component>

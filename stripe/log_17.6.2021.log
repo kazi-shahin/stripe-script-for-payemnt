@@ -567,3 +567,203 @@ response: {
 }
 
 ------------------------------------------
+User: 127.0.0.1 - June 17, 2021, 1:18 pm
+Attempt: Error
+http Code: 404
+User: Guest
+response: {
+  "error": {
+    "message": "See https://stripe.com/docs for information on integrating our API.",
+    "type": "invalid_request_error"
+  }
+}
+
+------------------------------------------
+User: 127.0.0.1 - June 17, 2021, 1:19 pm
+Attempt: Error
+http Code: 404
+User: Guest
+response: {
+  "error": {
+    "message": "See https://stripe.com/docs for information on integrating our API.",
+    "type": "invalid_request_error"
+  }
+}
+
+------------------------------------------
+User: 127.0.0.1 - June 17, 2021, 1:33 pm
+Attempt: Error
+http Code: 404
+User: Guest
+response: {
+  "error": {
+    "message": "See https://stripe.com/docs for information on integrating our API.",
+    "type": "invalid_request_error"
+  }
+}
+
+------------------------------------------
+User: 127.0.0.1 - June 17, 2021, 1:33 pm
+Attempt: Error
+http Code: 404
+User: Guest
+response: {
+  "error": {
+    "message": "See https://stripe.com/docs for information on integrating our API.",
+    "type": "invalid_request_error"
+  }
+}
+
+------------------------------------------
+User: 127.0.0.1 - June 17, 2021, 1:39 pm
+Attempt: Error
+http Code: 404
+User: Guest
+response: {
+  "error": {
+    "message": "See https://stripe.com/docs for information on integrating our API.",
+    "type": "invalid_request_error"
+  }
+}
+
+------------------------------------------
+User: 127.0.0.1 - June 17, 2021, 1:40 pm
+Attempt: Error
+http Code: 404
+User: Guest
+response: {
+  "error": {
+    "message": "See https://stripe.com/docs for information on integrating our API.",
+    "type": "invalid_request_error"
+  }
+}
+
+------------------------------------------
+User: 127.0.0.1 - June 17, 2021, 1:40 pm
+Attempt: Error
+http Code: 404
+User: Guest
+response: {
+  "error": {
+    "message": "See https://stripe.com/docs for information on integrating our API.",
+    "type": "invalid_request_error"
+  }
+}
+
+------------------------------------------
+User: 127.0.0.1 - June 17, 2021, 1:40 pm
+Attempt: Error
+http Code: 404
+User: Guest
+response: {
+  "error": {
+    "message": "See https://stripe.com/docs for information on integrating our API.",
+    "type": "invalid_request_error"
+  }
+}
+
+------------------------------------------
+User: 127.0.0.1 - June 17, 2021, 1:40 pm
+Attempt: Error
+http Code: 404
+User: Guest
+response: {
+  "error": {
+    "message": "See https://stripe.com/docs for information on integrating our API.",
+    "type": "invalid_request_error"
+  }
+}
+
+------------------------------------------
+User: 127.0.0.1 - June 17, 2021, 1:41 pm
+Attempt: Error
+http Code: 404
+User: Guest
+response: {
+  "error": {
+    "message": "See https://stripe.com/docs for information on integrating our API.",
+    "type": "invalid_request_error"
+  }
+}
+
+------------------------------------------
+User: 127.0.0.1 - June 17, 2021, 1:41 pm
+Attempt: Success
+http Code: 200
+User: Guest
+response: {
+  "id": "tok_1J3LTbGxRtOk5p73GBqqwXiS",
+  "object": "token",
+  "card": {
+    "id": "card_1J3LTbGxRtOk5p733MIUIBws",
+    "object": "card",
+    "address_city": null,
+    "address_country": null,
+    "address_line1": null,
+    "address_line1_check": null,
+    "address_line2": null,
+    "address_state": null,
+    "address_zip": null,
+    "address_zip_check": null,
+    "brand": "Visa",
+    "country": "US",
+    "cvc_check": "unchecked",
+    "dynamic_last4": null,
+    "exp_month": 6,
+    "exp_year": 2022,
+    "fingerprint": "5evTepEEEPYTB7Ui",
+    "funding": "credit",
+    "last4": "4242",
+    "metadata": {
+    },
+    "name": null,
+    "tokenization_method": null
+  },
+  "client_ip": "103.149.142.220",
+  "created": 1623937307,
+  "livemode": false,
+  "type": "card",
+  "used": false
+}
+
+------------------------------------------
+User: 127.0.0.1 - June 17, 2021, 1:42 pm
+Attempt: Success
+http Code: 200
+User: Guest
+response: {
+  "id": "tok_1J3LU7GxRtOk5p73KpxeQo2J",
+  "object": "token",
+  "card": {
+    "id": "card_1J3LU7GxRtOk5p73Nfc5ozQz",
+    "object": "card",
+    "address_city": null,
+    "address_country": null,
+    "address_line1": null,
+    "address_line1_check": null,
+    "address_line2": null,
+    "address_state": null,
+    "address_zip": null,
+    "address_zip_check": null,
+    "brand": "Visa",
+    "country": "US",
+    "cvc_check": "unchecked",
+    "dynamic_last4": null,
+    "exp_month": 6,
+    "exp_year": 2022,
+    "fingerprint": "5evTepEEEPYTB7Ui",
+    "funding": "credit",
+    "last4": "4242",
+    "metadata": {
+    },
+    "name": null,
+    "tokenization_method": null
+  },
+  "client_ip": "103.149.142.220",
+  "created": 1623937339,
+  "livemode": false,
+  "type": "card",
+  "used": false
+}
+
+------------------------------------------

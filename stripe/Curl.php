@@ -8,7 +8,6 @@ class Curl extends Base {
     // class variable that will hold the curl request handler
     private $handler;
 
-    // class variable that will hold the url
     private $baseUrl;
 
     // class variable that will hold the data inputs of our request
@@ -39,12 +38,12 @@ class Curl extends Base {
     }
 
     /**
-     * @param string $baseUrl
+     * @param $endPoint
      * @return $this
      */
-    public function setBaseUrl(){
+    public function setBaseUrl($endPoint){
 
-        $this->baseUrl = self::STRIPE_END_POINT.'/'.self::STRIPE_API_VERSION;
+        $this->baseUrl = self::STRIPE_END_POINT.'/'.self::STRIPE_API_VERSION.$endPoint;
         return $this;
     }
 
@@ -75,9 +74,11 @@ class Curl extends Base {
             #if( $this->handler !== null ){
                 $this->handler = curl_init( );
             #}
-            switch( strtolower( $this->requestMethod ) ){
+
+            switch($this->requestMethod){
 
                 case self::POST:
+
                     curl_setopt($this->handler, CURLOPT_POST, count($this->data));
                     if ($this->data)
                         curl_setopt($this->handler, CURLOPT_POSTFIELDS, http_build_query($this->data));

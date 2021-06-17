@@ -1,7 +1,8 @@
 <?php
 require_once('Curl.php');
+require_once('Base.php');
 
-class Product {
+class Product extends Base {
 
     const END_POINT = '/products';
     private $curl;

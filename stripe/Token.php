@@ -1,7 +1,8 @@
 <?php
 require_once('Curl.php');
+require_once('Base.php');
 
-class Token {
+class Token extends Base {
 
     const END_POINT = '/tokens';
     private $curl;
