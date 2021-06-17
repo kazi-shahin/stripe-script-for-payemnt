@@ -1,6 +1,6 @@
 <?php
 
-require_once('DotEnv.php');
+require_once('LoadDotEnvFile.php');
 require_once('Base.php');
 
 class Curl extends Base {
@@ -20,7 +20,7 @@ class Curl extends Base {
     {
         $this->isCurlInstalled();
 
-        (new DotEnv($this->getEnvFilePath('.env'), []))->load();
+        (new LoadDotEnvFile($this->getEnvFilePath('.env'), []))->load();
         $this->initProperties();
     }
 

@@ -2,7 +2,7 @@
 
 
 
-class DotEnv
+class LoadDotEnvFile
 {
     /**
      * Convert true and false to booleans, instead of:
@@ -29,7 +29,7 @@ class DotEnv
      *
      * @var array
      */
-    protected $options = [];
+    protected $options ;
 
     public function __construct(string $path, array $options = [])
     {
@@ -38,6 +38,8 @@ class DotEnv
         }
 
         $this->path = $path;
+        $this->options = [];
+
 
         $this->processOptions($options);
     }
