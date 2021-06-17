@@ -53,10 +53,10 @@ $cvcUpdateToken = array(
 );
 
 
-$token = new Token();
-echo '<pre>';
-print_r($token->createCard($cardToken));
-echo '</pre>';
+//$token = new Token();
+//echo '<pre>';
+//print_r($token->createCard($cardToken));
+//echo '</pre>';
 
 
 $paymentMethodCreate = array(
@@ -69,21 +69,21 @@ $paymentMethodCreate = array(
     ],
 );
 
-$paymentMethod = new PaymentMethod();
-echo '<pre>';
-print_r($paymentMethod->create($paymentMethod));
-print_r($paymentMethod->retrieve('pm_1EUmzw2xToAoV8choYUtciXR'));
-print_r($paymentMethod->update('pm_1EUmzw2xToAoV8choYUtciXR',['metadata' => ['order_id' => '6735']]));
-print_r($paymentMethod->all(['customer' => 'cus_JgEB0xk16nTGMV','type' => 'card']));
-print_r($paymentMethod->attach('pm_1EUmzw2xToAoV8choYUtciXR',['customer' => 'cus_JgEB0xk16nTGMV']));
-echo '</pre>';
+//$paymentMethod = new PaymentMethod();
+//echo '<pre>';
+//print_r($paymentMethod->create($paymentMethod));
+//print_r($paymentMethod->retrieve('pm_1EUmzw2xToAoV8choYUtciXR'));
+//print_r($paymentMethod->update('pm_1EUmzw2xToAoV8choYUtciXR',['metadata' => ['order_id' => '6735']]));
+//print_r($paymentMethod->all(['customer' => 'cus_JgEB0xk16nTGMV','type' => 'card']));
+//print_r($paymentMethod->attach('pm_1EUmzw2xToAoV8choYUtciXR',['customer' => 'cus_JgEB0xk16nTGMV']));
+//echo '</pre>';
 
 $postdata =  array(
     "amount"        => '500', // required
     "currency"        => 'usd', // required
     "source"        => 'tok_visa',
-    "description" =>  'alamin',
-    "customer" =>  '',
+    "description" =>  '',
+//    "customer" =>  '',
 //    "receipt_email" => '',
 //    "application_fee_amount" => '',
 //    "transfer_group" => '',
@@ -110,7 +110,7 @@ $charge = new Charge();
 
 echo '<pre>';
 //print_r();
-//print_r($charge->create($postdata));
+print_r($charge->create($postdata));
 //print_r($charge->retrieve('ch_1J3HSBGxRtOk5p73h2wS4HLU'));
 //print_r($charge->delete('ch_1J3HSBGxRtOk5p73h2wS4HLU'));
 echo '</pre>';

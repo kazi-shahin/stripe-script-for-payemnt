@@ -1,6 +1,7 @@
 <?php
 require_once('Curl.php');
 require_once('Base.php');
+require_once('Service.php');
 
 /**
  * Class Charge
