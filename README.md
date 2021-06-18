@@ -48,6 +48,50 @@ In this example, we have some files and folder that you need to concentrate abou
 - `Subscriptions`
 - `Token`
 
+#### As a Developer  How could I make payment to stripe?
+- Step 1: Clone the repo
+- Step 2: Update .env file with stripe secret key
+- Step 3: Generate token of your payment method, Calling `create` method of `Token` class with the object
+```
+[
+    'card' => [
+        'number' => '4242424242424242',
+        'exp_month' => 6,
+        'exp_year' => 2022,
+        'cvc' => '314',
+    ],
+]
+``` 
+
+- Step 4: Make payment by calling `create` method of `Charge` class with the object
+```
+[
+    "amount"        => '500',  // required, Amount always multiply by 100
+    "currency"        => 'usd', // required
+    "source"        => 'tok_visa', // User token id of generated token by card information
+    "description" =>  '',
+    "customer" =>  '',
+    "receipt_email" => '',
+    "application_fee_amount" => '',
+    "transfer_group" => '',
+    "capture" => '',
+
+    "metadata" => ["order_id" => ""],
+    "shipping" => [
+        "address" => '',
+        "name" => '',
+        "carrier" => '',
+        "phone" => '',
+        "tracking_number" => '',
+    ],
+    'transfer_data' => [
+        'amount' => '',
+        'destination' => '',
+    ],
+]
+```
+
+
 ## Tips
 You are not allowed to send the card data to your servers.
 
