@@ -55,7 +55,7 @@ $cvcUpdateToken = array(
 
 //$token = new Token();
 //echo '<pre>';
-//print_r($token->createCard($cardToken));
+//print_r($token->create($cardToken));
 //echo '</pre>';
 
 
@@ -107,10 +107,7 @@ $postdata =  array(
 
 $charge = new Charge();
 
-
 echo '<pre>';
-//print_r();
-$postdata = '';
 print_r($charge->create($postdata));
 //print_r($charge->retrieve('ch_1J3HSBGxRtOk5p73h2wS4HLU'));
 //print_r($charge->delete('ch_1J3HSBGxRtOk5p73h2wS4HLU'));
