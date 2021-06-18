@@ -8,7 +8,7 @@ For running this example, you need to clone the repo
 
 ### Manually
 ```
-git clone https://github.com/omise/omise-php
+git clone git@github.com:kazi-shahin/stripe-script-for-payemnt.git
 ```
 
 ```
