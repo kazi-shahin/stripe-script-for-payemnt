@@ -16,7 +16,7 @@ class PaymentMethod extends BaseApi implements StripeInterface {
     private $curl;
 
     /**
-     * Customer constructor.
+     * PaymentMethod constructor.
      */
     public function __construct()
     {
