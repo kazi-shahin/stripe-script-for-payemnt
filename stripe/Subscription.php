@@ -5,10 +5,19 @@ require_once('StripeInterface.php');
 
 class Subscription extends BaseApi implements StripeInterface {
 
+    /**
+     * declared stripe subscriptions api end point
+     */
     const END_PONT = '/subscriptions';
 
+    /**
+     * @var Curl
+     */
     private $curl;
 
+    /**
+     * Subscription constructor.
+     */
     public function __construct()
     {
         $this->curl = new Curl();
@@ -16,9 +25,11 @@ class Subscription extends BaseApi implements StripeInterface {
 
     /**
      * @param $data
-     * @return bool|string
+     * @return mixed
      */
     public function create($data){
+
+       if(!is_array($data)) return self::INVALID_DATA;
 
        return $this->curl->setBaseUrl(self::END_PONT)
             ->setMethod(self::POST)
@@ -28,9 +39,11 @@ class Subscription extends BaseApi implements StripeInterface {
 
     /**
      * @param $id
-     * @return bool|string
+     * @return mixed
      */
     public function retrieve($id){
+
+        if(!is_string($id)) return self::INVALID_DATA;
 
         return $this->curl->setBaseUrl(self::END_PONT.'/'.$id)
             ->setMethod(self::GET)
@@ -39,22 +52,32 @@ class Subscription extends BaseApi implements StripeInterface {
 
     /**
      * @param $id
-     * @param $data
-     * @return bool|string
+     * @param $orderId
+     * @return string
      */
-    public function update($id, $data){
+    public function update($id, $orderId){
+
+        if(!is_string($id) || !is_string($orderId)) return self::INVALID_DATA;
 
         return $this->curl->setBaseUrl(self::END_PONT.'/'.$id)
             ->setMethod(self::PUT)
-            ->setData($data)
+            ->setData(
+                [
+                    'metadata' => [
+                        'order_id' => $orderId
+                    ]
+                ]
+            )
             ->sendDataToStripeApi();
     }
 
     /**
      * @param $id
-     * @return bool|string
+     * @return mixed
      */
     public function delete($id){
+
+        if(!is_string($id)) return self::INVALID_DATA;
 
         return $this->curl->setBaseUrl(self::END_PONT.'/'.$id)
             ->setMethod(self::DELETE)
@@ -62,12 +85,20 @@ class Subscription extends BaseApi implements StripeInterface {
     }
 
     /**
-     * @return bool|string
+     * @param int $limit
+     * @return mixed
      */
-    public function all(){
+    public function all($limit = 3){
+
+        if(!is_int($limit)) return self::INVALID_DATA;
 
         return $this->curl->setBaseUrl(self::END_PONT)
             ->setMethod(self::GET)
+            ->setData(
+                [
+                    'limit' => $limit
+                ]
+            )
             ->sendDataToStripeApi();
     }
 }
