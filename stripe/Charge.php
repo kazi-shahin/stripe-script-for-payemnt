@@ -9,14 +9,14 @@ require_once('StripeInterface.php');
 class Charge extends BaseApi implements StripeInterface {
 
     /**
-     * @var Curl
-     */
-    private $curl;
-
-    /**
      * declared stripe charge api end point
      */
     const END_PONT = '/charges';
+
+    /**
+     * @var Curl
+     */
+    private $curl;
 
     /**
      * Charge constructor.
@@ -89,12 +89,20 @@ class Charge extends BaseApi implements StripeInterface {
     }
 
     /**
+     * @param int $limit
      * @return mixed
      */
-    public function all(){
+    public function all($limit = 3){
+
+        if(!is_int($limit)) return self::INVALID_DATA;
 
         return $this->curl->setBaseUrl(self::END_PONT)
             ->setMethod(self::GET)
+            ->setData(
+                [
+                    'limit' => $limit
+                ]
+            )
             ->sendDataToStripeApi();
     }
 

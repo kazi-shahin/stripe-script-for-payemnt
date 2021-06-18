@@ -5,7 +5,14 @@ require_once('StripeInterface.php');
 
 class Customer extends BaseApi implements StripeInterface {
 
+    /**
+     * declared stripe customers api end point
+     */
     const END_POINT = '/customers';
+
+    /**
+     * @var Curl
+     */
     private $curl;
 
     /**
@@ -18,11 +25,13 @@ class Customer extends BaseApi implements StripeInterface {
 
     /**
      * @param $data
-     * @return bool|string
+     * @return mixed
      */
     public function create($data){
 
-       return $this->curl->setBaseUrl(self::END_POINT)
+        if(!is_array($data)) return self::INVALID_DATA;
+
+        return $this->curl->setBaseUrl(self::END_POINT)
             ->setMethod(self::POST)
             ->setData($data)
             ->sendDataToStripeApi();
@@ -30,9 +39,11 @@ class Customer extends BaseApi implements StripeInterface {
 
     /**
      * @param $id
-     * @return bool|string
+     * @return mixed
      */
     public function retrieve($id){
+
+        if(!is_string($id)) return self::INVALID_DATA;
 
         return $this->curl->setBaseUrl(self::END_POINT.'/'.$id)
             ->setMethod(self::GET)
@@ -41,22 +52,32 @@ class Customer extends BaseApi implements StripeInterface {
 
     /**
      * @param $id
-     * @param $data
-     * @return bool|string
+     * @param $orderId
+     * @return string
      */
-    public function update($id, $data){
+    public function update($id, $orderId){
+
+        if(!is_string($id) || !is_string($orderId)) return self::INVALID_DATA;
 
         return $this->curl->setBaseUrl(self::END_POINT.'/'.$id)
             ->setMethod(self::PUT)
-            ->setData($data)
+            ->setData(
+                [
+                    'metadata' => [
+                        'order_id' => $orderId
+                    ]
+                ]
+            )
             ->sendDataToStripeApi();
     }
 
     /**
      * @param $id
-     * @return bool|string
+     * @return mixed
      */
     public function delete($id){
+
+        if(!is_string($id)) return self::INVALID_DATA;
 
         return $this->curl->setBaseUrl(self::END_POINT.'/'.$id)
             ->setMethod(self::DELETE)
@@ -64,12 +85,20 @@ class Customer extends BaseApi implements StripeInterface {
     }
 
     /**
-     * @return bool|string
+     * @param int $limit
+     * @return mixed
      */
-    public function all(){
+    public function all($limit = 3){
+
+        if(!is_int($limit)) return self::INVALID_DATA;
 
         return $this->curl->setBaseUrl(self::END_POINT)
             ->setMethod(self::GET)
+            ->setData(
+                [
+                    'limit' => $limit
+                ]
+            )
             ->sendDataToStripeApi();
     }
 
