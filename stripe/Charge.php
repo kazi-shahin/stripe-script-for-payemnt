@@ -8,9 +8,19 @@ require_once('StripeInterface.php');
  */
 class Charge extends BaseApi implements StripeInterface {
 
+    /**
+     * @var Curl
+     */
     private $curl;
+
+    /**
+     * declared stripe charge api end point
+     */
     const END_PONT = '/charges';
 
+    /**
+     * Charge constructor.
+     */
     public function __construct()
     {
         $this->curl = new Curl();
@@ -18,9 +28,11 @@ class Charge extends BaseApi implements StripeInterface {
 
     /**
      * @param $data
-     * @return bool|string
+     * @return mixed
      */
     public function create($data){
+
+       if(!is_array($data)) return self::INVALID_DATA;
 
        return $this->curl->setBaseUrl(self::END_PONT)
             ->setMethod(self::POST)
@@ -28,11 +40,14 @@ class Charge extends BaseApi implements StripeInterface {
             ->sendDataToStripeApi();
     }
 
+
     /**
      * @param $id
-     * @return bool|string
+     * @return mixed
      */
     public function retrieve($id){
+
+        if(!is_string($id)) return self::INVALID_DATA;
 
         return $this->curl->setBaseUrl(self::END_PONT.'/'.$id)
             ->setMethod(self::GET)
@@ -40,13 +55,15 @@ class Charge extends BaseApi implements StripeInterface {
     }
 
     /**
-     * @param $chargeId
+     * @param $id
      * @param $orderId
-     * @return bool|string
+     * @return mixed
      */
-    public function update($chargeId, $orderId){
+    public function update($id, $orderId){
 
-        return $this->curl->setBaseUrl(self::END_PONT.'/'.$chargeId)
+        if(!is_string($id) || !is_string($orderId)) return self::INVALID_DATA;
+
+        return $this->curl->setBaseUrl(self::END_PONT.'/'.$id)
             ->setMethod(self::PUT)
             ->setData(
                 [
@@ -60,9 +77,11 @@ class Charge extends BaseApi implements StripeInterface {
 
     /**
      * @param $id
-     * @return bool|string
+     * @return mixed
      */
     public function capture($id){
+
+        if(!is_string($id)) return self::INVALID_DATA;
 
         return $this->curl->setBaseUrl(self::END_PONT.'/'.$id.'/capture')
             ->setMethod(self::POST)
@@ -70,7 +89,7 @@ class Charge extends BaseApi implements StripeInterface {
     }
 
     /**
-     * @return bool|string
+     * @return mixed
      */
     public function all(){
 
