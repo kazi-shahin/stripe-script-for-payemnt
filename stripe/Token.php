@@ -4,9 +4,19 @@ require_once('BaseApi.php');
 
 class Token extends BaseApi {
 
+    /**
+     * declared stripe tokens api end point
+     */
     const END_POINT = '/tokens';
+
+    /**
+     * @var Curl
+     */
     private $curl;
 
+    /**
+     * Token constructor.
+     */
     public function __construct()
     {
         $this->curl = new Curl();
@@ -14,7 +24,7 @@ class Token extends BaseApi {
 
     /**
      * @param $data
-     * @return bool|string
+     * @return mixed
      */
     public function create($data){
 
@@ -26,7 +36,7 @@ class Token extends BaseApi {
 
     /**
      * @param $id
-     * @return bool|string
+     * @return mixed
      */
     public function retrieve($id){
 

@@ -49,26 +49,27 @@ class Charge extends BaseApi implements StripeInterface {
 
         if(!is_string($id)) return self::INVALID_DATA;
 
-        return $this->curl->setBaseUrl(self::END_PONT.'/'.$id)
+        return $this->curl->setBaseUrl(self::END_PONT . '/' . $id)
             ->setMethod(self::GET)
             ->sendDataToStripeApi();
+
     }
 
     /**
      * @param $id
-     * @param $orderId
+     * @param null $referenceId
      * @return mixed
      */
-    public function update($id, $orderId){
+    public function update($id, $referenceId=null){
 
-        if(!is_string($id) || !is_string($orderId)) return self::INVALID_DATA;
+        if(!is_string($id) ) return self::INVALID_DATA;
 
         return $this->curl->setBaseUrl(self::END_PONT.'/'.$id)
             ->setMethod(self::PUT)
             ->setData(
                 [
                     'metadata' => [
-                        'order_id' => $orderId
+                        'order_id' => $referenceId
                     ]
                 ]
             )
@@ -92,7 +93,7 @@ class Charge extends BaseApi implements StripeInterface {
      * @param int $limit
      * @return mixed
      */
-    public function all($limit = 3){
+    public function all($limit = self::LIMIT){
 
         if(!is_int($limit)) return self::INVALID_DATA;
 

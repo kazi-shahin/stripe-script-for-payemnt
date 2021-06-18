@@ -18,6 +18,8 @@ abstract class BaseApi {
     const GET = 'GET';
     const PUT = 'PUT';
     const DELETE = 'DELETE';
+    const LIMIT = 3;
+
 
     const INVALID_DATA = "Input invalid data";
 

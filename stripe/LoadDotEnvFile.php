@@ -55,7 +55,7 @@ class LoadDotEnvFile
      * Processes the $path of the instances and parses the values into $_SERVER and $_ENV, also returns all the data that has been read.
      * Skips empty and commented lines.
      */
-    public function load() : void
+    public function loadEnv() : void
     {
         if (!is_readable($this->path)) {
             throw new \RuntimeException(sprintf('%s file is not readable', $this->path));

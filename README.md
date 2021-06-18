@@ -51,7 +51,7 @@ In this example, we have some files and folder that you need to concentrate abou
 #### As a Developer  How could I make payment to stripe?
 - Step 1: Clone the repo
 - Step 2: Update .env file with stripe secret key
-- Step 3: Generate token of your payment method, Calling `create` method of `Token` class with the object
+- Step 3: Generate token of your payment method, Calling `create` method of `Token` class (filename Token.php) with the object
 ```
 [
     'card' => [
@@ -63,7 +63,7 @@ In this example, we have some files and folder that you need to concentrate abou
 ]
 ``` 
 
-- Step 4: Make payment by calling `create` method of `Charge` class with the object
+- Step 4: Make payment by calling `create` method of `Charge` class (filename Charge.php) with the object
 ```
 [
     "amount"        => '500',  // required, Amount always multiply by 100

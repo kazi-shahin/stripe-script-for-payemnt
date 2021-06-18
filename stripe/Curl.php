@@ -55,7 +55,7 @@ class Curl extends BaseApi {
      */
     public function __construct(){
         $this->checkCurlIsInstalledOrNot();
-        (new LoadDotEnvFile($this->getEnvFilePath(self::ENV), []))->load();
+        (new LoadDotEnvFile($this->getEnvFilePath(self::ENV), []))->loadEnv();
         $this->initProperties();
         $this->setLogFileName();
     }
@@ -97,6 +97,7 @@ class Curl extends BaseApi {
      */
     public function setBaseUrl($endPoint){
         $this->baseUrl = self::STRIPE_END_POINT.'/'.self::STRIPE_API_VERSION.$endPoint;
+        return $this;
     }
 
     /**
@@ -104,13 +105,17 @@ class Curl extends BaseApi {
      */
     public function setData( $data = [] ){
         $this->data = $data;
+        return $this;
     }
 
     /**
      * @param string $requestMethod
      */
     public function setMethod( $requestMethod = self::GET ){
+
         $this->requestMethod = $requestMethod;
+        return $this;
+
     }
 
     /**
@@ -128,6 +133,7 @@ class Curl extends BaseApi {
      */
     public function setAdditionalHandlerInCurl(){
 
+        try{
             curl_setopt($this->handler, CURLOPT_URL, $this->baseUrl);
             curl_setopt($this->handler, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($this->handler, CURLOPT_ENCODING, '');
@@ -139,6 +145,11 @@ class Curl extends BaseApi {
                 'Authorization: Bearer ' . $_ENV['STRIPE_SECRET_KEY'],
                 'Content-Type: application/x-www-form-urlencoded',
             ));
+
+        }catch( Exception $e ){
+            $this->writeLog('error', $e->getCode(), $e->getMessage());
+            return $e->getMessage();
+        }
     }
 
     /**
@@ -147,7 +158,7 @@ class Curl extends BaseApi {
     public function sendDataToStripeApi(){
         try{
 
-           $this->handler = curl_init( );
+            $this->handler = curl_init( );
             switch($this->requestMethod){
 
                 case self::POST:
