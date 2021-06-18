@@ -1,12 +1,12 @@
 <?php
 require_once('Curl.php');
-require_once('Base.php');
+require_once('BaseApi.php');
 require_once('Service.php');
 
 /**
  * Class Charge
  */
-class Charge extends Base {
+class Charge extends BaseApi {
 
     private $curl;
     const END_PONT = '/charges';

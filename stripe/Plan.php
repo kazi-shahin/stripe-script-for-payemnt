@@ -1,8 +1,8 @@
 <?php
 require_once('Curl.php');
-require_once('Base.php');
+require_once('BaseApi.php');
 
-class Plan extends Base{
+class Plan extends BaseApi{
 
     const END_POINT = '/plans';
     private $curl;

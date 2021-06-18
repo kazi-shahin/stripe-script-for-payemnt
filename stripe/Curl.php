@@ -1,9 +1,9 @@
 <?php
 
 require_once('LoadDotEnvFile.php');
-require_once('Base.php');
+require_once('BaseApi.php');
 
-class Curl extends Base {
+class Curl extends BaseApi {
 
     // class variable that will hold the curl request handler
     private $handler;

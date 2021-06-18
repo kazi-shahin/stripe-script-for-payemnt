@@ -1,8 +1,8 @@
 <?php
 require_once('Curl.php');
-require_once('Base.php');
+require_once('BaseApi.php');
 
-class PaymentMethod extends Base {
+class PaymentMethod extends BaseApi {
 
     const END_POINT = '/payment_methods';
 

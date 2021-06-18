@@ -1,8 +1,8 @@
 <?php
 require_once('Curl.php');
-require_once('Base.php');
+require_once('BaseApi.php');
 
-class Subscription extends Base{
+class Subscription extends BaseApi{
 
     const END_PONT = '/subscriptions';
 
