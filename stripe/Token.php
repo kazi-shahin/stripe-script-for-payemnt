@@ -16,12 +16,12 @@ class Token extends BaseApi {
      * @param $data
      * @return bool|string
      */
-    public function createCard($data){
+    public function create($data){
 
         return $this->curl->setBaseUrl(self::END_POINT)
             ->setMethod(self::POST)
             ->setData($data)
-            ->send();
+            ->sendDataToStripeApi();
     }
 
     /**
@@ -32,6 +32,6 @@ class Token extends BaseApi {
 
         return $this->curl->setBaseUrl(self::END_POINT.'/'.$id)
             ->setMethod(self::GET)
-            ->send();
+            ->sendDataToStripeApi();
     }
 }

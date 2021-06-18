@@ -1,8 +1,9 @@
 <?php
 require_once('Curl.php');
 require_once('BaseApi.php');
+require_once('StripeInterface.php');
 
-class Plan extends BaseApi{
+class Plan extends BaseApi implements StripeInterface{
 
     const END_POINT = '/plans';
     private $curl;
@@ -20,7 +21,7 @@ class Plan extends BaseApi{
        return $this->curl->setBaseUrl(self::END_POINT)
             ->setMethod(self::POST)
             ->setData($data)
-            ->send();
+            ->sendDataToStripeApi();
     }
 
     /**
@@ -31,7 +32,7 @@ class Plan extends BaseApi{
 
         return $this->curl->setBaseUrl(self::END_POINT.'/'.$id)
             ->setMethod(self::GET)
-            ->send();
+            ->sendDataToStripeApi();
     }
 
     /**
@@ -44,7 +45,7 @@ class Plan extends BaseApi{
         return $this->curl->setBaseUrl(self::END_POINT.'/'.$id)
             ->setMethod(self::PUT)
             ->setData($data)
-            ->send();
+            ->sendDataToStripeApi();
     }
 
     /**
@@ -55,7 +56,7 @@ class Plan extends BaseApi{
 
         return $this->curl->setBaseUrl(self::END_POINT.'/'.$id)
             ->setMethod(self::DELETE)
-            ->send();
+            ->sendDataToStripeApi();
     }
 
     /**
@@ -65,7 +66,7 @@ class Plan extends BaseApi{
 
         return $this->curl->setBaseUrl(self::END_POINT)
             ->setMethod(self::GET)
-            ->send();
+            ->sendDataToStripeApi();
     }
 
 }

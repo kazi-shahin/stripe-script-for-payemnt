@@ -1,7 +1,6 @@
 <?php
 require_once('Curl.php');
 require_once('BaseApi.php');
-require_once('Service.php');
 require_once('StripeInterface.php');
 
 /**
@@ -26,7 +25,7 @@ class Charge extends BaseApi implements StripeInterface {
        return $this->curl->setBaseUrl(self::END_PONT)
             ->setMethod(self::POST)
             ->setData($data)
-            ->send();
+            ->sendDataToStripeApi();
     }
 
     /**
@@ -37,7 +36,7 @@ class Charge extends BaseApi implements StripeInterface {
 
         return $this->curl->setBaseUrl(self::END_PONT.'/'.$id)
             ->setMethod(self::GET)
-            ->send();
+            ->sendDataToStripeApi();
     }
 
     /**
@@ -56,7 +55,7 @@ class Charge extends BaseApi implements StripeInterface {
                     ]
                 ]
             )
-            ->send();
+            ->sendDataToStripeApi();
     }
 
     /**
@@ -67,7 +66,7 @@ class Charge extends BaseApi implements StripeInterface {
 
         return $this->curl->setBaseUrl(self::END_PONT.'/'.$id.'/capture')
             ->setMethod(self::POST)
-            ->send();
+            ->sendDataToStripeApi();
     }
 
     /**
@@ -77,7 +76,7 @@ class Charge extends BaseApi implements StripeInterface {
 
         return $this->curl->setBaseUrl(self::END_PONT)
             ->setMethod(self::GET)
-            ->send();
+            ->sendDataToStripeApi();
     }
 
 }

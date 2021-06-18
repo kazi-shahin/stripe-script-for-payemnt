@@ -5,7 +5,26 @@ require_once('BaseApi.php');
 
 class Curl extends BaseApi {
 
+    /**
+     * declared env file
+     */
     const ENV = '../.env';
+
+    /**
+     * declared log file path
+     */
+    const LOG_PATH = './logs';
+
+    /**
+     * declared log file prefix
+     */
+    const LOG_FILE_PREFIX = 'log';
+
+    /**
+     * @var
+     * class variable that will hold the log file name
+     */
+    private $logFileName;
 
     /**
      * @var
@@ -15,6 +34,7 @@ class Curl extends BaseApi {
 
     /**
      * @var
+     * class variable that will hold the api base url
      */
     private $baseUrl;
 
@@ -33,11 +53,11 @@ class Curl extends BaseApi {
     /**
      * Curl constructor
      */
-    public function __construct()
-    {
-        $this->isCurlInstalled();
+    public function __construct(){
+        $this->checkCurlIsInstalledOrNot();
         (new LoadDotEnvFile($this->getEnvFilePath(self::ENV), []))->load();
         $this->initProperties();
+        $this->setLogFileName();
     }
 
     /**
@@ -54,67 +74,59 @@ class Curl extends BaseApi {
     }
 
     /**
+     * Display curl installed or not install in the server
+     */
+    public function checkCurlIsInstalledOrNot()
+    {
+        if ($this->isCurlInstalled()) {
+            echo "<br>cURL is <span style=\"color:blue\">installed</span> on this server<br>";
+        } else {
+            echo "<br>cURL is NOT <span style=\"color:red\">installed</span> on this server<br>";
+        }
+    }
+
+    /**
+     * set log file path and name
+     */
+    public function setLogFileName(){
+        $this->logFileName = self::LOG_PATH.'/'.self::LOG_FILE_PREFIX.'_'.date("j.n.Y").'.log';
+    }
+
+    /**
      * @param $endPoint
-     * @return $this
      */
     public function setBaseUrl($endPoint){
-
         $this->baseUrl = self::STRIPE_END_POINT.'/'.self::STRIPE_API_VERSION.$endPoint;
-        return $this;
     }
 
     /**
      * @param array $data
-     * @return $this
      */
     public function setData( $data = [] ){
         $this->data = $data;
-        return $this;
     }
 
     /**
      * @param string $requestMethod
-     * @return $this
      */
     public function setMethod( $requestMethod = self::GET ){
         $this->requestMethod = $requestMethod;
-        return $this;
     }
 
     /**
-     * @return bool|string
+     * @param $requestMethod
      */
-    public function send(){
-        try{
+    public function handleRequestMethod($requestMethod){
 
-            #if( $this->handler !== null ){
-                $this->handler = curl_init( );
-            #}
+        curl_setopt($this->handler, CURLOPT_CUSTOMREQUEST, $requestMethod);
+        if ($this->data)
+            curl_setopt($this->handler, CURLOPT_POSTFIELDS, http_build_query($this->data));
+    }
 
-            switch($this->requestMethod){
-
-                case self::POST:
-
-                    curl_setopt($this->handler, CURLOPT_POST, count($this->data));
-                    if ($this->data)
-                        curl_setopt($this->handler, CURLOPT_POSTFIELDS, http_build_query($this->data));
-                    break;
-                case self::PUT:
-                    curl_setopt($this->handler, CURLOPT_CUSTOMREQUEST, self::PUT);
-                    if ($this->data)
-                        curl_setopt($this->handler, CURLOPT_POSTFIELDS, http_build_query($this->data));
-                    break;
-                case self::DELETE:
-                    curl_setopt($this->handler, CURLOPT_CUSTOMREQUEST, self::DELETE);
-                    if ($this->data)
-                        curl_setopt($this->handler, CURLOPT_POSTFIELDS, http_build_query($this->data));
-                    break;
-                default:
-                    if ($this->data)
-                        $this->baseUrl = sprintf("%s?%s", $this->baseUrl, http_build_query($this->data));
-                    break;
-
-            }
+    /**
+     * set additional handler in curl
+     */
+    public function setAdditionalHandlerInCurl(){
 
             curl_setopt($this->handler, CURLOPT_URL, $this->baseUrl);
             curl_setopt($this->handler, CURLOPT_RETURNTRANSFER, true);
@@ -124,30 +136,54 @@ class Curl extends BaseApi {
             curl_setopt($this->handler, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($this->handler, CURLOPT_HTTP_VERSION, 'CURL_HTTP_VERSION_1_1');
             curl_setopt($this->handler, CURLOPT_HTTPHEADER, array(
-                'Authorization: Bearer '.$_ENV['STRIPE_SECRET_KEY'],
+                'Authorization: Bearer ' . $_ENV['STRIPE_SECRET_KEY'],
                 'Content-Type: application/x-www-form-urlencoded',
             ));
+    }
 
-            $response = curl_exec ( $this->handler );
+    /**
+     * @return bool|string
+     */
+    public function sendDataToStripeApi(){
+        try{
 
-            $httpCode = curl_getinfo($this->handler, CURLINFO_HTTP_CODE);
+           $this->handler = curl_init( );
+            switch($this->requestMethod){
 
-            if($httpCode == 200) {
-                $this->writeLog('Success', $httpCode, $response);
-            }else{
-                $this->writeLog('Error',$httpCode, $response);
+                case self::POST:
+                    curl_setopt($this->handler, CURLOPT_POST, count($this->data));
+                    $this->handleRequestMethod($this->requestMethod);
+                    break;
+                case self::PUT || self::DELETE:
+                    $this->handleRequestMethod($this->requestMethod);
+                    break;
+                default:
+                    if ($this->data)
+                        $this->baseUrl = sprintf("%s?%s", $this->baseUrl, http_build_query($this->data));
+                    break;
             }
 
-            curl_close ( $this->handler );
+            // set additional handler
+            $this->setAdditionalHandlerInCurl();
+
+            $response = curl_exec($this->handler);
+            $httpCode = curl_getinfo($this->handler, CURLINFO_HTTP_CODE);
+
+            if ($httpCode == 200) {
+                $this->writeLog('Success', $httpCode, $response);
+            } else {
+                $this->writeLog('Error', $httpCode, $response);
+            }
+
+            curl_close($this->handler);
             $this->handler = null;
 
             return $response;
 
         }catch( Exception $e ){
             $this->writeLog('error', $e->getCode(), $e->getMessage());
-            die( $e->getMessage() );
+            return $e->getMessage();
         }
-
     }
 
     /**
@@ -156,6 +192,7 @@ class Curl extends BaseApi {
      * @param $response
      */
     public function writeLog($status, $httpCode, $response){
+
         //To write to txt log
         $log  = "User: ".$_SERVER['REMOTE_ADDR'].' - '.date("F j, Y, g:i a").PHP_EOL.
             "Attempt: ".$status.PHP_EOL.
@@ -164,7 +201,8 @@ class Curl extends BaseApi {
             "response: ".$response.PHP_EOL.
             "------------------------------------------".PHP_EOL;
         //Save string to log, use FILE_APPEND to append.
-        file_put_contents('./log_'.date("j.n.Y").'.log', $log, FILE_APPEND);
+
+        file_put_contents($this->logFileName, $log, FILE_APPEND);
     }
 
     /**
@@ -172,11 +210,11 @@ class Curl extends BaseApi {
      */
     public  function isCurlInstalled() {
 
-        if  (in_array  ('curl', get_loaded_extensions())) {
-            echo "<br>cURL is <span style=\"color:blue\">installed</span> on this server<br>";
+        if (in_array ('curl', get_loaded_extensions())) {
+            return true;
         }
         else {
-            echo "<br>cURL is NOT <span style=\"color:red\">installed</span> on this server<br>";
+            return false;
         }
     }
 

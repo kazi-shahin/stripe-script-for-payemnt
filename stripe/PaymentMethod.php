@@ -1,8 +1,9 @@
 <?php
 require_once('Curl.php');
 require_once('BaseApi.php');
+require_once('StripeInterface.php');
 
-class PaymentMethod extends BaseApi {
+class PaymentMethod extends BaseApi implements StripeInterface {
 
     const END_POINT = '/payment_methods';
 
@@ -22,7 +23,7 @@ class PaymentMethod extends BaseApi {
         return $this->curl->setBaseUrl(self::END_PONT)
             ->setMethod(self::POST)
             ->setData($data)
-            ->send();
+            ->sendDataToStripeApi();
     }
 
     /**
@@ -33,7 +34,7 @@ class PaymentMethod extends BaseApi {
 
         return $this->curl->setBaseUrl(self::END_PONT.'/'.$id)
             ->setMethod(self::GET)
-            ->send();
+            ->sendDataToStripeApi();
     }
 
     /**
@@ -46,7 +47,7 @@ class PaymentMethod extends BaseApi {
         return $this->curl->setBaseUrl(self::END_PONT.'/'.$id)
             ->setMethod(self::PUT)
             ->setData($data)
-            ->send();
+            ->sendDataToStripeApi();
     }
 
     /**
@@ -57,7 +58,7 @@ class PaymentMethod extends BaseApi {
 
         return $this->curl->setBaseUrl(self::END_PONT.'/'.$id)
             ->setMethod(self::DELETE)
-            ->send();
+            ->sendDataToStripeApi();
     }
 
     /**
@@ -67,7 +68,7 @@ class PaymentMethod extends BaseApi {
 
         return $this->curl->setBaseUrl(self::END_PONT)
             ->setMethod(self::GET)
-            ->send();
+            ->sendDataToStripeApi();
     }
 
     /**
@@ -80,7 +81,7 @@ class PaymentMethod extends BaseApi {
         return $this->curl->setBaseUrl(self::END_PONT.'/'.$id.'/attach')
             ->setMethod(self::POST)
             ->setData($data)
-            ->send();
+            ->sendDataToStripeApi();
     }
 
     /**
@@ -92,6 +93,6 @@ class PaymentMethod extends BaseApi {
         return $this->curl->setBaseUrl(self::END_PONT.'/'.$id.'/detach')
             ->setMethod(self::POST)
             ->setData([])
-            ->send();
+            ->sendDataToStripeApi();
     }
 }

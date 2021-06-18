@@ -1,8 +1,9 @@
 <?php
 require_once('Curl.php');
 require_once('BaseApi.php');
+require_once('StripeInterface.php');
 
-class Subscription extends BaseApi {
+class Subscription extends BaseApi implements StripeInterface {
 
     const END_PONT = '/subscriptions';
 
@@ -22,7 +23,7 @@ class Subscription extends BaseApi {
        return $this->curl->setBaseUrl(self::END_PONT)
             ->setMethod(self::POST)
             ->setData($data)
-            ->send();
+            ->sendDataToStripeApi();
     }
 
     /**
@@ -33,7 +34,7 @@ class Subscription extends BaseApi {
 
         return $this->curl->setBaseUrl(self::END_PONT.'/'.$id)
             ->setMethod(self::GET)
-            ->send();
+            ->sendDataToStripeApi();
     }
 
     /**
@@ -46,7 +47,7 @@ class Subscription extends BaseApi {
         return $this->curl->setBaseUrl(self::END_PONT.'/'.$id)
             ->setMethod(self::PUT)
             ->setData($data)
-            ->send();
+            ->sendDataToStripeApi();
     }
 
     /**
@@ -57,7 +58,7 @@ class Subscription extends BaseApi {
 
         return $this->curl->setBaseUrl(self::END_PONT.'/'.$id)
             ->setMethod(self::DELETE)
-            ->send();
+            ->sendDataToStripeApi();
     }
 
     /**
@@ -67,6 +68,6 @@ class Subscription extends BaseApi {
 
         return $this->curl->setBaseUrl(self::END_PONT)
             ->setMethod(self::GET)
-            ->send();
+            ->sendDataToStripeApi();
     }
 }
