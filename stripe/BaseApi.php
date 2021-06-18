@@ -2,7 +2,7 @@
 
 require_once('Curl.php');
 
-class BaseApi {
+abstract class BaseApi {
     const STRIPE_END_POINT = 'https://api.stripe.com';
     const STRIPE_API_VERSION = 'v1';
     const POST = 'POST';

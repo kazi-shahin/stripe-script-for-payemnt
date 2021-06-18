@@ -5,22 +5,38 @@ require_once('BaseApi.php');
 
 class Curl extends BaseApi {
 
-    // class variable that will hold the curl request handler
+    const ENV = '../.env';
+
+    /**
+     * @var
+     * class variable that will hold the curl request handler
+     */
     private $handler;
 
+    /**
+     * @var
+     */
     private $baseUrl;
 
-    // class variable that will hold the data inputs of our request
+    /**
+     * @var
+     * class variable that will hold the data inputs of our request
+     */
     private $data;
 
-    // class variable that will tell us what type of request method to use (defaults to get)
+    /**
+     * @var
+     * class variable that will tell us what type of request method to use (defaults to get)
+     */
     private $requestMethod;
 
+    /**
+     * Curl constructor
+     */
     public function __construct()
     {
         $this->isCurlInstalled();
-
-        (new LoadDotEnvFile($this->getEnvFilePath('.env'), []))->load();
+        (new LoadDotEnvFile($this->getEnvFilePath(self::ENV), []))->load();
         $this->initProperties();
     }
 

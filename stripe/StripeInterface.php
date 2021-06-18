@@ -3,9 +3,9 @@
 
 interface StripeInterface
 {
-    public function create();
-    public function retrieve();
-    public function update();
+    public function create($data);
+    public function retrieve($id);
+    public function update($chargeId, $orderId);
     public function all();
 
     #public function delete()

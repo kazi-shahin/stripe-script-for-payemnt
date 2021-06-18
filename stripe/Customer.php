@@ -2,10 +2,14 @@
 require_once('Curl.php');
 require_once('BaseApi.php');
 
-class Customer extends BaseApi{
+class Customer extends BaseApi {
 
     const END_POINT = '/customers';
     private $curl;
+
+    /**
+     * Customer constructor.
+     */
     public function __construct()
     {
         $this->curl = new Curl();

@@ -1,8 +1,8 @@
 <?php
 
-require_once('Charge.php');
-require_once('Token.php');
-require_once('PaymentMethod.php');
+require_once('stripe/Charge.php');
+require_once('stripe/Token.php');
+require_once('stripe/PaymentMethod.php');
 
 
 $cardToken = array(

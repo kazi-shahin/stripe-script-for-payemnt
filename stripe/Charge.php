@@ -2,11 +2,12 @@
 require_once('Curl.php');
 require_once('BaseApi.php');
 require_once('Service.php');
+require_once('StripeInterface.php');
 
 /**
  * Class Charge
  */
-class Charge extends BaseApi {
+class Charge extends BaseApi implements StripeInterface {
 
     private $curl;
     const END_PONT = '/charges';
@@ -40,15 +41,21 @@ class Charge extends BaseApi {
     }
 
     /**
-     * @param $id
-     * @param $data
+     * @param $chargeId
+     * @param $orderId
      * @return bool|string
      */
-    public function update($id, $data){
+    public function update($chargeId, $orderId){
 
-        return $this->curl->setBaseUrl(self::END_PONT.'/'.$id)
+        return $this->curl->setBaseUrl(self::END_PONT.'/'.$chargeId)
             ->setMethod(self::PUT)
-            ->setData($data)
+            ->setData(
+                [
+                    'metadata' => [
+                        'order_id' => $orderId
+                    ]
+                ]
+            )
             ->send();
     }
 
