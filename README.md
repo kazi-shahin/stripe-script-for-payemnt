@@ -38,6 +38,15 @@ In this example, we have some files and folder that you need to concentrate abou
 - `.env`
 - `logs/*`
 
+### Covered Features
+
+- `Charge`
+- `Customer`
+- `Payment Method`
+- `Plan`
+- `Product`
+- `Subscriptions`
+- `Token`
 
 ## Tips
 You are not allowed to send the card data to your servers.
