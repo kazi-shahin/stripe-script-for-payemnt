@@ -54,7 +54,7 @@ class Curl extends BaseApi {
      * Curl constructor
      */
     public function __construct(){
-        $this->checkCurlIsInstalledOrNot();
+        // $this->checkCurlIsInstalledOrNot();
         (new LoadDotEnvFile($this->getEnvFilePath(self::ENV), []))->loadEnv();
         $this->initProperties();
         $this->setLogFileName();
@@ -189,7 +189,7 @@ class Curl extends BaseApi {
             curl_close($this->handler);
             $this->handler = null;
 
-            return $response;
+            return json_decode($response);
 
         }catch( Exception $e ){
             $this->writeLog('error', $e->getCode(), $e->getMessage());
